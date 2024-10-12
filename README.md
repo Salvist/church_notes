@@ -28,6 +28,9 @@ This offline-first, free app makes it easy to capture your thoughts, organize th
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
+## Disclaimer for ASV Bible
+This app uses the **American Standard Version (ASV)** of the Bible, which is in the public domain.
+
 ---
 
 **Stay inspired, stay organized, stay connected with God's word.**
