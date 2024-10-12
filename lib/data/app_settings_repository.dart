@@ -27,4 +27,15 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
     await _prefs.setString(_themeBrightness, brightness.name);
     log('App theme has been set to ${brightness.name} mode');
   }
+
+  @override
+  Future<void> finishOnboarding() async {
+    await _prefs.setBool(_didOnboarding, true);
+    log('Onboarding is completed');
+  }
+
+  @override
+  Future<bool> isOnboardingCompleted() async {
+    return await _prefs.getBool(_didOnboarding) ?? false;
+  }
 }

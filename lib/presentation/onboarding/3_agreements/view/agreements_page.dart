@@ -1,9 +1,11 @@
+import 'package:church_notes/domain/repositories/app_settings.dart';
 import 'package:church_notes/presentation/home/widgets/privacy_policy_button.dart';
 import 'package:church_notes/presentation/home/widgets/terms_and_conditions_button.dart';
 import 'package:church_notes/presentation/onboarding/widgets/onboarding_scaffold.dart';
 import 'package:church_notes/presentation/theme/view/brightness_button.dart';
 import 'package:church_notes/presentation/widgets/church_note_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AgreementsPage extends StatelessWidget {
   const AgreementsPage({super.key});
@@ -36,7 +38,10 @@ class AgreementsPage extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<AppSettingsRepository>().finishOnboarding();
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                },
                 child: const Text('Sounds good!'),
               ),
             ),

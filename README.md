@@ -1,4 +1,4 @@
-# church_notes
+# Church Notes
 
 **Church Notes** is an innovative and intuitive note-taking app designed to enhance your note-taking experience by seamlessly integrating Bible verses into your notes. Whether you're studying, journaling, or jotting down ideas, Church Notes helps you stay inspired by automatically adding relevant verses from the American Standard Version (ASV) of the Bible.
 
