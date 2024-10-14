@@ -75,6 +75,7 @@ flutter:
   assets:
     - assets/bibles/english/
     - assets/bibles/indonesian/
+    - assets/images/icons/
     - privacy_policy.md
     - terms_and_conditions.md
 

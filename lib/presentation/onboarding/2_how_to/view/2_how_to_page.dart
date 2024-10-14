@@ -78,6 +78,10 @@ class HowToPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16),
                       child: Text('- ASV (English)', style: textTheme.bodyLarge),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Text('- TB (Indonesian)', style: textTheme.bodyLarge),
+                    ),
                   ],
                 ),
               ),

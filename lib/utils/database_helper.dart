@@ -14,7 +14,17 @@ const asvCreateTable = 'CREATE TABLE $asvTableName ('
     'text TEXT'
     ')';
 
+const tbCreateTable = 'CREATE TABLE $tbTableName ('
+    'id INTEGER PRIMARY KEY AUTOINCREMENT, '
+    'book_name TEXT, '
+    'book INTEGER, '
+    'chapter INTEGER, '
+    'verse INTEGER, '
+    'text TEXT'
+    ')';
+
 const asvTableName = 'ASV';
+const tbTableName = 'TB';
 
 class DatabaseHelper {
   const DatabaseHelper._();
@@ -26,27 +36,49 @@ class DatabaseHelper {
       join(dbPath, dbName),
       version: 1,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
     return db;
   }
 
   static Future<void> _onCreate(Database db, int version) async {
-    final json = await rootBundle.loadString('assets/bibles/english/asv.json');
-    final bibleASV = jsonDecode(json) as Map<String, dynamic>;
-    final rawVerses = bibleASV['verses'] as List<dynamic>;
-    final versesASV = Verse.fromJSON(rawVerses);
-
+    // Version 1
+    // American Standard Version (ASV)
+    final asvBible = await getVerses('assets/bibles/english/asv.json');
     await db.execute(asvCreateTable);
-    await addBible(db, versesASV);
+    await addBible(db, asvTableName, asvBible);
+
+    // Version 2
+    // Terjemahan Baru (TB)
+    final tbBible = await getVerses('assets/bibles/indonesian/tb.json');
+    await db.execute(tbCreateTable);
+    await addBible(db, tbTableName, tbBible);
+
     await db
         .execute('CREATE TABLE Notes (id TEXT PRIMARY KEY, title TEXT, content TEXT, updatedAt TEXT, createdAt TEXT)');
   }
 
-  static Future<void> addBible(Database db, List<Verse> verses) async {
+  static Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    // Version 2
+    final tbBible = await getVerses('assets/bibles/indonesian/tb.json');
+    await db.execute(tbCreateTable);
+    await addBible(db, tbTableName, tbBible);
+  }
+
+
+  static Future<void> addBible(Database db, String tableName, List<Verse> verses) async {
     final batch = db.batch();
     for (final verse in verses) {
-      batch.insert(asvTableName, verse.toMap());
+      batch.insert(tableName, verse.toMap());
     }
     await batch.commit(noResult: true);
+  }
+
+  static Future<List<Verse>> getVerses(String biblePath) async {
+    final jsonString = await rootBundle.loadString(biblePath);
+    final bibleJSON = jsonDecode(jsonString) as Map<String, dynamic>;
+    final rawVerses = bibleJSON['verses'] as List<dynamic>;
+    final verses = Verse.fromJSON(rawVerses);
+    return verses;
   }
 }

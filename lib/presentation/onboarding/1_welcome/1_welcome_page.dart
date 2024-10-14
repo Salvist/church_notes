@@ -5,6 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
+  static PageRoute route() {
+    return MaterialPageRoute(builder: (context) => const WelcomePage());
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;

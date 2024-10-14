@@ -19,15 +19,17 @@ void main() async {
 
   final prefs = SharedPreferencesAsync();
   final appRepository = AppSettingsRepositoryImpl(prefs);
-  await appRepository.setBrightness(Brightness.dark);
-  final brightness = await appRepository.getBrightness();
+
+  // To view onboarding
+  // await prefs.setBool('isOnboardingCompleted', false);
+
+
 
   runApp(
     ChurchNotesApp(
       appRepository: appRepository,
       bibleRepository: bibleRepository,
       noteRepository: noteRepository,
-      brightness: brightness,
     ),
   );
 }
