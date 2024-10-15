@@ -1,3 +1,4 @@
+import 'package:church_notes/domain/enums/bible_version.dart';
 import 'package:church_notes/domain/models/passage.dart';
 import 'package:church_notes/presentation/onboarding/2_how_to/cubit/passage_cubit.dart';
 import 'package:church_notes/presentation/onboarding/2_how_to/cubit/passage_state.dart';
@@ -32,6 +33,7 @@ class GetVersesExample extends StatelessWidget {
                         bookName: 'Jeremiah',
                         chapter: 29,
                         verseStart: 11,
+                        version: BibleVersion.asv,
                         matchStart: 0,
                         matchEnd: 1,
                       );

@@ -7,7 +7,6 @@ const _tableName = 'ASV';
 
 class BibleRepositoryImpl implements BibleRepository {
   final Database _db;
-
   const BibleRepositoryImpl(this._db);
 
   @override

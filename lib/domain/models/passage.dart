@@ -1,3 +1,4 @@
+import 'package:church_notes/domain/enums/bible_version.dart';
 import 'package:church_notes/domain/models/verse.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,6 +7,7 @@ class BibleReference extends Equatable {
   final int chapter;
   final int verseStart;
   final int? verseEnd;
+  final BibleVersion version;
 
   final int matchStart;
   final int matchEnd;
@@ -17,6 +19,7 @@ class BibleReference extends Equatable {
     this.verseEnd,
     required this.matchStart,
     required this.matchEnd,
+    required this.version,
   });
 
   @override
@@ -26,7 +29,7 @@ class BibleReference extends Equatable {
   }
 
   @override
-  List<Object?> get props => [bookName, chapter, verseStart, verseEnd, matchStart, matchEnd];
+  List<Object?> get props => [bookName, chapter, verseStart, verseEnd, version, matchStart, matchEnd];
 }
 
 class Passage {

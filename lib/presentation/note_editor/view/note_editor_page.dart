@@ -5,6 +5,7 @@ import 'package:church_notes/domain/models/note.dart';
 import 'package:church_notes/domain/repositories/bible_repository.dart';
 import 'package:church_notes/domain/repositories/note_repository.dart';
 import 'package:church_notes/presentation/note_editor/cubit/note_cubit.dart';
+import 'package:church_notes/presentation/note_editor/widgets/note_menu.dart';
 import 'package:church_notes/presentation/verse_lookup/cubit/verse_lookup_cubit.dart';
 import 'package:church_notes/presentation/verse_lookup/cubit/verse_lookup_state.dart';
 import 'package:flutter/material.dart';
@@ -136,22 +137,23 @@ class _NoteEditorViewState extends State<NoteEditorView> {
             ),
           ),
           actions: [
-            BlocBuilder<VerseLookupCubit, VerseLookupState>(
-              builder: (context, state) {
-                return TextButton(
-                  onPressed: state.isLoading
-                      ? null
-                      : () async {
-                          await context.read<VerseLookupCubit>().getPassages(noteController);
-                          if (!context.mounted) return;
-                          FocusScope.of(context).unfocus();
-
-                          setState(() {});
-                        },
-                  child: const Text('Get verses'),
-                );
-              },
-            )
+            // BlocBuilder<VerseLookupCubit, VerseLookupState>(
+            //   builder: (context, state) {
+            //     return TextButton(
+            //       onPressed: state.isLoading
+            //           ? null
+            //           : () async {
+            //               await context.read<VerseLookupCubit>().getPassages(noteController);
+            //               if (!context.mounted) return;
+            //               FocusScope.of(context).unfocus();
+            //
+            //               setState(() {});
+            //             },
+            //       child: const Text('Get verses'),
+            //     );
+            //   },
+            // ),
+            NoteMenu(controller: noteController),
           ],
         ),
         body: Column(

@@ -1,3 +1,4 @@
+import 'package:church_notes/domain/enums/bible_version.dart';
 import 'package:church_notes/domain/models/bible.dart';
 import 'package:church_notes/domain/models/passage.dart';
 import 'package:church_notes/domain/repositories/bible_repository.dart';
@@ -8,12 +9,12 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 class VerseLookupCubit extends Cubit<VerseLookupState> {
   final BibleRepository _bibleRepository;
+  VerseLookupCubit(this._bibleRepository, this.bibleVersion) : super(const VerseLookupSuccess());
 
-  VerseLookupCubit(this._bibleRepository) : super(const VerseLookupSuccess());
-
+  BibleVersion bibleVersion;
   final referencesInNote = <BibleReference, int>{};
 
-  List<BibleReference> getBibleReferences(String text) {
+  List<BibleReference> getBibleReferences(String text, BibleVersion version) {
     final regex = RegExp(r'(\d?(?:\d\s)?[A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?');
     final matches = regex.allMatches(text).where((element) => bibleBookNames.contains(element.group(1)));
     final references = matches.map((match) {
@@ -26,6 +27,7 @@ class VerseLookupCubit extends Cubit<VerseLookupState> {
         chapter: chapter,
         verseStart: verseStart,
         verseEnd: verseEnd,
+        version: version,
         matchStart: match.start,
         matchEnd: match.end,
       );
