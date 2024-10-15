@@ -1,10 +1,9 @@
 import 'package:church_notes/domain/enums/bible_version.dart';
-import 'package:church_notes/domain/models/bible.dart';
 import 'package:church_notes/domain/models/passage.dart';
 import 'package:church_notes/domain/repositories/bible_repository.dart';
 import 'package:church_notes/presentation/verse_lookup/cubit/verse_lookup_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
 class VerseLookupCubit extends Cubit<VerseLookupState> {
@@ -14,9 +13,11 @@ class VerseLookupCubit extends Cubit<VerseLookupState> {
   BibleVersion bibleVersion;
   final referencesInNote = <BibleReference, int>{};
 
-  List<BibleReference> getBibleReferences(String text, BibleVersion version) {
+  Future<List<BibleReference>> getBibleReferences(String text, {BibleVersion? version}) async {
+    final bookNames = await _bibleRepository.getBookNames(version ?? bibleVersion);
+
     final regex = RegExp(r'(\d?(?:\d\s)?[A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?');
-    final matches = regex.allMatches(text).where((element) => bibleBookNames.contains(element.group(1)));
+    final matches = regex.allMatches(text).where((element) => bookNames.contains(element.group(1)));
     final references = matches.map((match) {
       final bookName = match.group(1)!;
       final chapter = int.parse(match.group(2)!);
@@ -27,7 +28,7 @@ class VerseLookupCubit extends Cubit<VerseLookupState> {
         chapter: chapter,
         verseStart: verseStart,
         verseEnd: verseEnd,
-        version: version,
+        version: version ?? bibleVersion,
         matchStart: match.start,
         matchEnd: match.end,
       );
@@ -39,7 +40,7 @@ class VerseLookupCubit extends Cubit<VerseLookupState> {
   Future<void> getPassages(QuillController noteController) async {
     emit(const VerseLookupLoading());
     final content = noteController.document.toPlainText();
-    final bibleReferences = getBibleReferences(content);
+    final bibleReferences = await getBibleReferences(content);
 
     for (final reference in bibleReferences) {
       final x = content.characters.elementAtOrNull(reference.matchEnd);

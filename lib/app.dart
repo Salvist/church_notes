@@ -4,10 +4,7 @@ import 'package:church_notes/domain/repositories/note_repository.dart';
 import 'package:church_notes/presentation/app_settings/bloc/app_settings_bloc.dart';
 import 'package:church_notes/presentation/app_settings/bloc/state.dart';
 import 'package:church_notes/presentation/home/cubit/note_list_cubit.dart';
-import 'package:church_notes/presentation/home/view/home_page.dart';
-import 'package:church_notes/presentation/onboarding/1_welcome/1_welcome_page.dart';
 import 'package:church_notes/presentation/splash/view/splash_page.dart';
-import 'package:church_notes/presentation/theme/bloc/theme_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,15 +43,13 @@ class ChurchNotesApp extends StatelessWidget {
           BlocProvider<AppSettingsBloc>(create: (context) => AppSettingsBloc(appRepository)),
           BlocProvider<NoteListCubit>(create: (context) => NoteListCubit(noteRepository)),
         ],
-        child: BlocBuilder<AppSettingsBloc, AppSettings>(
-          builder: (context, settings) {
-            return MaterialApp(
-              title: 'Church Notes App',
-              theme: _getTheme(brightness: settings.brightness),
-              home: const SplashPage(),
-            );
-          }
-        ),
+        child: BlocBuilder<AppSettingsBloc, AppSettings>(builder: (context, settings) {
+          return MaterialApp(
+            title: 'Church Notes App',
+            theme: _getTheme(brightness: settings.brightness),
+            home: const SplashPage(),
+          );
+        }),
       ),
     );
   }

@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:church_notes/domain/models/note.dart';
 import 'package:church_notes/domain/repositories/bible_repository.dart';
 import 'package:church_notes/domain/repositories/note_repository.dart';
+import 'package:church_notes/presentation/app_settings/bloc/app_settings_bloc.dart';
+import 'package:church_notes/presentation/app_settings/bloc/state.dart';
 import 'package:church_notes/presentation/note_editor/cubit/note_cubit.dart';
 import 'package:church_notes/presentation/note_editor/widgets/note_menu.dart';
 import 'package:church_notes/presentation/verse_lookup/cubit/verse_lookup_cubit.dart';
@@ -33,19 +35,32 @@ class NoteEditorPage extends StatelessWidget {
             context.read<NoteRepository>(),
           ),
         ),
-        BlocProvider(create: (context) => VerseLookupCubit(context.read<BibleRepository>())),
+        BlocProvider(
+          create: (context) => VerseLookupCubit(
+            context.read<BibleRepository>(),
+            context.read<AppSettingsBloc>().state.defaultBible,
+          ),
+        ),
       ],
-      child: BlocListener<VerseLookupCubit, VerseLookupState>(
-        listener: (context, state) {
-          if (state == const VerseLookupSuccess()) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                duration: Duration(seconds: 2),
-                content: Text('Verse has been added'),
-              ),
-            );
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AppSettingsBloc, AppSettings>(
+            listenWhen: (previous, current) => previous.defaultBible != current.defaultBible,
+            listener: (context, settings) {
+              context.read<VerseLookupCubit>().bibleVersion = settings.defaultBible;
+            },
+          ),
+          BlocListener<VerseLookupCubit, VerseLookupState>(listener: (context, state) {
+            if (state == const VerseLookupSuccess()) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  duration: Duration(seconds: 2),
+                  content: Text('Verse has been added'),
+                ),
+              );
+            }
+          }),
+        ],
         child: const NoteEditorView(),
       ),
     );

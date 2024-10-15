@@ -65,7 +65,6 @@ class DatabaseHelper {
     await addBible(db, tbTableName, tbBible);
   }
 
-
   static Future<void> addBible(Database db, String tableName, List<Verse> verses) async {
     final batch = db.batch();
     for (final verse in verses) {

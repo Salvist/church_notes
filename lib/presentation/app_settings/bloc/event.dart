@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:church_notes/domain/enums/bible_version.dart';
 
 sealed class AppSettingsEvent {

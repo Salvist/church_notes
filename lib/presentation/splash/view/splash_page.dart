@@ -2,7 +2,7 @@ import 'package:church_notes/presentation/app_settings/bloc/app_settings_bloc.da
 import 'package:church_notes/presentation/app_settings/bloc/event.dart';
 import 'package:church_notes/presentation/app_settings/bloc/state.dart';
 import 'package:church_notes/presentation/home/view/home_page.dart';
-import 'package:church_notes/presentation/onboarding/1_welcome/1_welcome_page.dart';
+import 'package:church_notes/presentation/onboarding/1_welcome/welcome_page.dart';
 import 'package:church_notes/presentation/widgets/church_note_icon.dart';
 import 'package:church_notes/presentation/widgets/church_note_text.dart';
 import 'package:flutter/material.dart';

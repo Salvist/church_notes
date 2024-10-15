@@ -1,6 +1,5 @@
 import 'package:church_notes/domain/repositories/bible_repository.dart';
 import 'package:church_notes/presentation/onboarding/2_how_to/cubit/passage_cubit.dart';
-import 'package:church_notes/presentation/onboarding/2_how_to/cubit/passage_state.dart';
 import 'package:church_notes/presentation/onboarding/2_how_to/widgets/get_verses_example.dart';
 import 'package:church_notes/presentation/onboarding/2_how_to/widgets/note_container.dart';
 import 'package:church_notes/presentation/onboarding/3_agreements/view/agreements_page.dart';
@@ -24,7 +23,6 @@ class HowToPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       body: SafeArea(
