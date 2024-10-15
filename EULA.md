@@ -20,4 +20,4 @@ This app may include content from the **Indonesian Terjemahan Baru Bible (TB)**,
 This license will automatically terminate if you violate any of these restrictions. Upon termination, you must destroy any copies of the software in your possession.
 
 ### 7. Governing Law
-This agreement shall be governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law provisions.
+This agreement shall be governed by and construed in accordance with the laws of United States of America, without regard to its conflict of law provisions.
