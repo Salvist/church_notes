@@ -1,4 +1,4 @@
-**Terms & Conditions**
+# **Terms & Conditions**
 
 These terms and conditions applies to the Church Notes app (hereby referred to as "Application") for mobile devices that was created by Lone Dream Studio (hereby referred to as "Service Provider") as a Free service.
 
@@ -22,13 +22,17 @@ In terms of the Service Provider's responsibility for your use of the applicatio
 
 The Service Provider may wish to update the application at some point. The application is currently available as per the requirements for the operating system (and for any additional systems they decide to extend the availability of the application to) may change, and you will need to download the updates if you want to continue using the application. The Service Provider does not guarantee that it will always update the application so that it is relevant to you and/or compatible with the particular operating system version installed on your device. However, you agree to always accept updates to the application when offered to you. The Service Provider may also wish to cease providing the application and may terminate its use at any time without providing termination notice to you. Unless they inform you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must cease using the application, and (if necessary) delete it from your device.
 
-**Changes to These Terms and Conditions**
+## **Changes to These Terms and Conditions**
 
 The Service Provider may periodically update their Terms and Conditions. Therefore, you are advised to review this page regularly for any changes. The Service Provider will notify you of any changes by posting the new Terms and Conditions on this page.
 
 These terms and conditions are effective as of 2024-10-15
 
-**Contact Us**
+## **Intellectual Property**
+Church Notes may uses the **American Standard Version (ASV)** of the Bible, which is in the public domain.
+Church Notes may uses content from the **Indonesian Terjemahan Baru (TB)** of the Bible, which is a Copyright Lembaga Alkitab Indonesia (Indonesian Bible Society), 1994.
+
+## **Contact Us**
 
 If you have any questions or suggestions about the Terms and Conditions, please do not hesitate to contact the Service Provider at lonedreamstudio@gmail.com.
 

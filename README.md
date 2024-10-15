@@ -26,10 +26,17 @@ This offline-first, free app makes it easy to capture your thoughts, organize th
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+This project is subject to an **End-User License Agreement (EULA)**. By using this app, you agree to the following terms:
+
+This software is licensed for personal, non-commercial use only.
+- You may not modify, distribute, or use this software for commercial purposes.
+- For the full terms of the EULA, please refer to the [EULA](./EULA.md) file.
 
 ## Disclaimer for ASV Bible
-This app uses the **American Standard Version (ASV)** of the Bible, which is in the public domain.
+This app may uses the **American Standard Version (ASV)** of the Bible, which is in the public domain.
+
+## Disclaimer for Indonesian Terjemahan Baru Bible (TB)
+This app may include content from the **Indonesian Terjemahan Baru Bible (TB)**, which is copyrighted by the Lembaga Alkitab Indonesia (LAI). All rights are reserved.
 
 ---
 
