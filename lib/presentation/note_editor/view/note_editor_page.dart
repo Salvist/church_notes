@@ -22,7 +22,8 @@ class NoteEditorPage extends StatelessWidget {
   });
 
   static PageRoute<Note> route(Note note) {
-    return MaterialPageRoute<Note>(builder: (context) => NoteEditorPage(note: note));
+    return MaterialPageRoute<Note>(
+        builder: (context) => NoteEditorPage(note: note));
   }
 
   @override
@@ -45,12 +46,15 @@ class NoteEditorPage extends StatelessWidget {
       child: MultiBlocListener(
         listeners: [
           BlocListener<AppSettingsBloc, AppSettings>(
-            listenWhen: (previous, current) => previous.defaultBible != current.defaultBible,
+            listenWhen: (previous, current) =>
+                previous.defaultBible != current.defaultBible,
             listener: (context, settings) {
-              context.read<VerseLookupCubit>().bibleVersion = settings.defaultBible;
+              context.read<VerseLookupCubit>().bibleVersion =
+                  settings.defaultBible;
             },
           ),
-          BlocListener<VerseLookupCubit, VerseLookupState>(listener: (context, state) {
+          BlocListener<VerseLookupCubit, VerseLookupState>(
+              listener: (context, state) {
             if (state == const VerseLookupSuccess()) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -148,7 +152,8 @@ class _NoteEditorViewState extends State<NoteEditorView> {
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: 'Tap to edit title...',
-              hintStyle: textTheme.titleLarge?.copyWith(color: colorScheme.onSurface.withOpacity(0.4)),
+              hintStyle: textTheme.titleLarge
+                  ?.copyWith(color: colorScheme.onSurface.withValues(alpha: 0.4)),
             ),
           ),
           actions: [
@@ -178,42 +183,44 @@ class _NoteEditorViewState extends State<NoteEditorView> {
                 focusNode: noteFocusNode,
                 controller: noteController,
                 scrollController: noteScrollController,
-                configurations: const QuillEditorConfigurations(
+                config: const QuillEditorConfig(
                   padding: EdgeInsets.all(16),
                   placeholder: 'Start typing your note...',
                 ),
+                // configurations: const QuillEditorConfigurations(
+                //   padding: EdgeInsets.all(16),
+                //   placeholder: 'Start typing your note...',
+                // ),
               ),
             ),
-            QuillToolbar(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  QuillToolbarToggleStyleButton(
-                    attribute: Attribute.bold,
-                    controller: noteController,
-                  ),
-                  QuillToolbarToggleStyleButton(
-                    attribute: Attribute.italic,
-                    controller: noteController,
-                  ),
-                  QuillToolbarToggleStyleButton(
-                    attribute: Attribute.underline,
-                    controller: noteController,
-                  ),
-                  QuillToolbarToggleStyleButton(
-                    attribute: Attribute.strikeThrough,
-                    controller: noteController,
-                  ),
-                  QuillToolbarHistoryButton(
-                    isUndo: true,
-                    controller: noteController,
-                  ),
-                  QuillToolbarHistoryButton(
-                    isUndo: false,
-                    controller: noteController,
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.bold,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.italic,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.underline,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.strikeThrough,
+                  controller: noteController,
+                ),
+                QuillToolbarHistoryButton(
+                  isUndo: true,
+                  controller: noteController,
+                ),
+                QuillToolbarHistoryButton(
+                  isUndo: false,
+                  controller: noteController,
+                ),
+              ],
             ),
           ],
         ),
