@@ -2,14 +2,12 @@ import 'package:equatable/equatable.dart';
 
 class Verse extends Equatable {
   final String bookName;
-  final int book;
   final int chapter;
   final int verse;
   final String text;
 
   const Verse({
     required this.bookName,
-    required this.book,
     required this.chapter,
     required this.verse,
     required this.text,
@@ -18,7 +16,6 @@ class Verse extends Equatable {
   factory Verse.fromMap(Map<String, dynamic> data) {
     return Verse(
       bookName: data['book_name'],
-      book: data['book'],
       chapter: data['chapter'],
       verse: data['verse'],
       text: data['text'],
@@ -28,7 +25,6 @@ class Verse extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'book_name': bookName,
-      'book': book,
       'chapter': chapter,
       'verse': verse,
       'text': text,
@@ -43,5 +39,5 @@ class Verse extends Equatable {
   String toString() => '$verse. $text';
 
   @override
-  List<Object?> get props => [bookName, book, chapter, verse, text];
+  List<Object?> get props => [bookName, chapter, verse, text];
 }

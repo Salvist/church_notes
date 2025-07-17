@@ -1,14 +1,21 @@
 import 'package:church_notes/domain/enums/bible_version.dart';
+import 'package:church_notes/domain/enums/language.dart';
 
 class BibleBook {
   final String name;
   const BibleBook._(this.name);
 
   static List<BibleBook> getNames(BibleVersion version) {
-    switch (version) {
-      case BibleVersion.asv:
+    // switch (version) {
+    //   case BibleVersion.asv:
+    //     return englishNames;
+    //   case BibleVersion.tb:
+    //     return indonesianNames;
+    // }
+    switch (version.language) {
+      case Language.english:
         return englishNames;
-      case BibleVersion.tb:
+      case Language.indonesian:
         return indonesianNames;
     }
   }
