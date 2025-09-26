@@ -1,5 +1,4 @@
 import 'package:church_notes/domain/enums/bible_version.dart';
-import 'package:church_notes/domain/enums/language.dart';
 
 class BibleBook {
   final String name;
@@ -9,7 +8,7 @@ class BibleBook {
     switch (version) {
       case BibleVersion.asv || BibleVersion.nlt:
         return englishNames;
-      case Language.indonesian:
+      case BibleVersion.tb:
         return indonesianNames;
     }
   }

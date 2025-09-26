@@ -43,11 +43,7 @@ class NoteEditorPage extends StatelessWidget {
           BlocListener<AppSettingsBloc, AppSettings>(
             listenWhen: (previous, current) =>
                 previous.defaultBible != current.defaultBible,
-            listenWhen: (previous, current) =>
-                previous.defaultBible != current.defaultBible,
             listener: (context, settings) {
-              context.read<VerseLookupCubit>().bibleVersion =
-                  settings.defaultBible;
               context.read<VerseLookupCubit>().bibleVersion =
                   settings.defaultBible;
             },
@@ -151,29 +147,11 @@ class _NoteEditorViewState extends State<NoteEditorView> {
               border: InputBorder.none,
               hintText: 'Tap to edit title...',
               hintStyle: textTheme.titleLarge?.copyWith(
-                color: colorScheme.onSurface.withOpacity(0.4),
+                color: colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ),
-          actions: [
-            // BlocBuilder<VerseLookupCubit, VerseLookupState>(
-            //   builder: (context, state) {
-            //     return TextButton(
-            //       onPressed: state.isLoading
-            //           ? null
-            //           : () async {
-            //               await context.read<VerseLookupCubit>().getPassages(noteController);
-            //               if (!context.mounted) return;
-            //               FocusScope.of(context).unfocus();
-            //
-            //               setState(() {});
-            //             },
-            //       child: const Text('Get verses'),
-            //     );
-            //   },
-            // ),
-            NoteMenu(controller: noteController),
-          ],
+          actions: [NoteMenu(controller: noteController)],
         ),
         body: Column(
           children: [
@@ -182,43 +160,41 @@ class _NoteEditorViewState extends State<NoteEditorView> {
                 focusNode: noteFocusNode,
                 controller: noteController,
                 scrollController: noteScrollController,
-                // configurations: const QuillEditorConfigurations(
-                //   padding: EdgeInsets.all(16),
-                //   placeholder: 'Start typing your note...',
-                // ),
+                config: const QuillEditorConfig(
+                  placeholder: 'Start typing your note...',
+                  padding: EdgeInsets.all(16),
+                ),
               ),
             ),
-            // QuillToolbar(
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: [
-            //       QuillToolbarToggleStyleButton(
-            //         attribute: Attribute.bold,
-            //         controller: noteController,
-            //       ),
-            //       QuillToolbarToggleStyleButton(
-            //         attribute: Attribute.italic,
-            //         controller: noteController,
-            //       ),
-            //       QuillToolbarToggleStyleButton(
-            //         attribute: Attribute.underline,
-            //         controller: noteController,
-            //       ),
-            //       QuillToolbarToggleStyleButton(
-            //         attribute: Attribute.strikeThrough,
-            //         controller: noteController,
-            //       ),
-            //       QuillToolbarHistoryButton(
-            //         isUndo: true,
-            //         controller: noteController,
-            //       ),
-            //       QuillToolbarHistoryButton(
-            //         isUndo: false,
-            //         controller: noteController,
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.bold,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.italic,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.underline,
+                  controller: noteController,
+                ),
+                QuillToolbarToggleStyleButton(
+                  attribute: Attribute.strikeThrough,
+                  controller: noteController,
+                ),
+                QuillToolbarHistoryButton(
+                  isUndo: true,
+                  controller: noteController,
+                ),
+                QuillToolbarHistoryButton(
+                  isUndo: false,
+                  controller: noteController,
+                ),
+              ],
+            ),
           ],
         ),
       ),

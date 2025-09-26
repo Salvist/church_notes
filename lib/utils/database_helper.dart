@@ -1,34 +1,15 @@
 import 'dart:convert';
 
-import 'package:church_notes/data/source/local/bible_parser.dart';
-import 'package:church_notes/domain/enums/bible_version.dart';
 import 'package:church_notes/domain/models/verse.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-const asvCreateTable = 'CREATE TABLE $asvTableName ('
-    'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-    'book_name TEXT, '
-    'book INTEGER, '
-    'chapter INTEGER, '
-    'verse INTEGER, '
-    'text TEXT'
-    ')';
-
-const tbCreateTable = 'CREATE TABLE $tbTableName ('
-    'id INTEGER PRIMARY KEY AUTOINCREMENT, '
-    'book_name TEXT, '
-    'book INTEGER, '
-    'chapter INTEGER, '
-    'verse INTEGER, '
-    'text TEXT'
-    ')';
-
 const asvTableName = 'ASV';
 const tbTableName = 'TB';
 
-const bibleColumns = 'id INTEGER PRIMARY KEY AUTOINCREMENT'
+const bibleColumns =
+    'id INTEGER PRIMARY KEY AUTOINCREMENT'
     'book_name TEXT, '
     'chapter INTEGER, '
     'verse INTEGER, '
@@ -37,15 +18,13 @@ const bibleColumns = 'id INTEGER PRIMARY KEY AUTOINCREMENT'
 
 class DatabaseHelper {
   const DatabaseHelper._();
-  static const _oldVersion = 1;
-  static const _newVersion = 2;
 
   static Future<Database> initDB() async {
     final dbPath = await getDatabasesPath();
     const dbName = 'church_notes.db';
     final db = await openDatabase(
       join(dbPath, dbName),
-      version: 3,
+      version: 4,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -53,53 +32,41 @@ class DatabaseHelper {
   }
 
   static Future<void> _onCreate(Database db, int version) async {
-    // Version 1y create ASV table and Notes table
     final asvBible = await getVerses('assets/bibles/english/asv.json');
-    await db.execute(asvCreateTable);
+    await db.execute(getBibleTableSyntax(asvTableName));
     await addBible(db, asvTableName, asvBible);
 
+    final tbBible = await getVerses('assets/bibles/indonesian/tb.json');
+    await db.execute(getBibleTableSyntax(tbTableName));
+    await addBible(db, tbTableName, tbBible);
+
     await db.execute(
-        'CREATE TABLE Notes (id TEXT PRIMARY KEY, title TEXT, content TEXT, updatedAt TEXT, createdAt TEXT)');
+      'CREATE TABLE Notes (id TEXT PRIMARY KEY, title TEXT, content TEXT, updatedAt TEXT, createdAt TEXT)',
+    );
   }
 
   static Future<void> _onUpgrade(
-      Database db, int oldVersion, int newVersion) async {
-    // Version 2
+    Database db,
+    int oldVersion,
+    int newVersion,
+  ) async {
+    await db.execute('DROP TABLE $asvTableName');
+    await db.execute('DROP TABLE $tbTableName');
+
+    final asvBible = await getVerses('assets/bibles/english/asv.json');
+    await db.execute(getBibleTableSyntax(asvTableName));
+    await addBible(db, asvTableName, asvBible);
+
     final tbBible = await getVerses('assets/bibles/indonesian/tb.json');
-    await db.execute(tbCreateTable);
+    await db.execute(getBibleTableSyntax(tbTableName));
     await addBible(db, tbTableName, tbBible);
-
-    // Version 3
-  }
-
-  static Future<void> createBible() async {}
-
-  static Future<void> migrateBibleTable(Database db, String bibleTable) async {
-    await db.execute('ALTER TABLE $bibleTable RENAME TO ${bibleTable}_old');
-    await db.execute('CREATE TABLE $bibleTable ($bibleColumns)');
-  }
-
-    // Version 3
-    if (oldVersion < 3) {
-      final kjvTableName = BibleVersion.kjv.code;
-      if (!await _tableExists(db, kjvTableName)) {
-        final kjvBible =
-            await BibleParser.parseKJV('assets/bibles/english/kjv.json');
-        await db.execute(createBibleTable(kjvTableName));
-        await addBible(db, kjvTableName, kjvBible);
-      }
-    }
-  }
-
-  static Future<bool> _tableExists(Database db, String tableName) async {
-    final result = await db.rawQuery(
-        "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
-        [tableName]);
-    return result.isNotEmpty;
   }
 
   static Future<void> addBible(
-      Database db, String tableName, List<Verse> verses) async {
+    Database db,
+    String tableName,
+    List<Verse> verses,
+  ) async {
     final batch = db.batch();
     for (final verse in verses) {
       batch.insert(tableName, verse.toMap());
@@ -115,7 +82,7 @@ class DatabaseHelper {
     return verses;
   }
 
-  static String createBibleTable(String tableName) {
+  static String getBibleTableSyntax(String tableName) {
     return 'CREATE TABLE $tableName ('
         'id INTEGER PRIMARY KEY AUTOINCREMENT, '
         'book_name TEXT, '
