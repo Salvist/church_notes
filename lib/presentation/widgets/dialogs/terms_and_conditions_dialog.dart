@@ -5,7 +5,8 @@ class TermsAndConditionsDialog extends StatefulWidget {
   const TermsAndConditionsDialog({super.key});
 
   @override
-  State<TermsAndConditionsDialog> createState() => _TermsAndConditionsDialogState();
+  State<TermsAndConditionsDialog> createState() =>
+      _TermsAndConditionsDialogState();
 }
 
 class _TermsAndConditionsDialogState extends State<TermsAndConditionsDialog> {
@@ -13,7 +14,9 @@ class _TermsAndConditionsDialogState extends State<TermsAndConditionsDialog> {
 
   @override
   void initState() {
-    _termsAndConditions = DefaultAssetBundle.of(context).loadString('terms_and_conditions.md');
+    _termsAndConditions = DefaultAssetBundle.of(
+      context,
+    ).loadString('terms_and_conditions.md');
     super.initState();
   }
 
@@ -25,7 +28,24 @@ class _TermsAndConditionsDialogState extends State<TermsAndConditionsDialog> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final privacyPolicy = snapshot.requireData;
-            return Markdown(data: privacyPolicy);
+            return Column(
+              children: [
+                Expanded(child: Markdown(data: privacyPolicy)),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Close'),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+            );
           } else if (snapshot.hasError) {
             return const Text('Failed to load privacy policy');
           } else {

@@ -6,7 +6,7 @@ class BibleBook {
 
   static List<BibleBook> getNames(BibleVersion version) {
     switch (version) {
-      case BibleVersion.asv:
+      case BibleVersion.asv || BibleVersion.nlt:
         return englishNames;
       case BibleVersion.tb:
         return indonesianNames;

@@ -13,7 +13,9 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
 
   @override
   void initState() {
-    _privacyPolicy = DefaultAssetBundle.of(context).loadString('privacy_policy.md');
+    _privacyPolicy = DefaultAssetBundle.of(
+      context,
+    ).loadString('privacy_policy.md');
     super.initState();
   }
 
@@ -25,7 +27,24 @@ class _PrivacyPolicyDialogState extends State<PrivacyPolicyDialog> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final privacyPolicy = snapshot.requireData;
-            return Markdown(data: privacyPolicy);
+            return Column(
+              children: [
+                Expanded(child: Markdown(data: privacyPolicy)),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Close'),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+            );
           } else if (snapshot.hasError) {
             return const Text('Failed to load privacy policy');
           } else {

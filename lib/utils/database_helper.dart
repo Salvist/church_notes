@@ -26,8 +26,17 @@ const tbCreateTable = 'CREATE TABLE $tbTableName ('
 const asvTableName = 'ASV';
 const tbTableName = 'TB';
 
+const bibleColumns = 'id INTEGER PRIMARY KEY AUTOINCREMENT'
+    'book_name TEXT, '
+    'chapter INTEGER, '
+    'verse INTEGER, '
+    'text TEXT, '
+    'createdAt INTEGER';
+
 class DatabaseHelper {
   const DatabaseHelper._();
+  static const _oldVersion = 1;
+  static const _newVersion = 2;
 
   static Future<Database> initDB() async {
     final dbPath = await getDatabasesPath();
@@ -63,6 +72,15 @@ class DatabaseHelper {
     final tbBible = await getVerses('assets/bibles/indonesian/tb.json');
     await db.execute(tbCreateTable);
     await addBible(db, tbTableName, tbBible);
+
+    // Version 3
+  }
+
+  static Future<void> createBible() async {}
+
+  static Future<void> migrateBibleTable(Database db, String bibleTable) async {
+    await db.execute('ALTER TABLE $bibleTable RENAME TO ${bibleTable}_old');
+    await db.execute('CREATE TABLE $bibleTable ($bibleColumns)');
   }
 
   static Future<void> addBible(Database db, String tableName, List<Verse> verses) async {

@@ -45,6 +45,7 @@ class ChurchNotesApp extends StatelessWidget {
         ],
         child: BlocBuilder<AppSettingsBloc, AppSettings>(builder: (context, settings) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Church Notes App',
             theme: _getTheme(brightness: settings.brightness),
             home: const SplashPage(),
