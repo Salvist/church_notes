@@ -43,7 +43,11 @@ class NoteEditorPage extends StatelessWidget {
           BlocListener<AppSettingsBloc, AppSettings>(
             listenWhen: (previous, current) =>
                 previous.defaultBible != current.defaultBible,
+            listenWhen: (previous, current) =>
+                previous.defaultBible != current.defaultBible,
             listener: (context, settings) {
+              context.read<VerseLookupCubit>().bibleVersion =
+                  settings.defaultBible;
               context.read<VerseLookupCubit>().bibleVersion =
                   settings.defaultBible;
             },

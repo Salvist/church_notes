@@ -12,7 +12,5 @@ enum BibleVersion {
 
 class BibleRules {
   final int? cacheLimit;
-  const BibleRules({
-    this.cacheLimit,
-  });
+  const BibleRules({this.cacheLimit});
 }

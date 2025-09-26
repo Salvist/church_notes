@@ -1,4 +1,5 @@
 import 'package:church_notes/domain/enums/bible_version.dart';
+import 'package:church_notes/domain/enums/language.dart';
 
 class BibleBook {
   final String name;
@@ -8,7 +9,7 @@ class BibleBook {
     switch (version) {
       case BibleVersion.asv || BibleVersion.nlt:
         return englishNames;
-      case BibleVersion.tb:
+      case Language.indonesian:
         return indonesianNames;
     }
   }
@@ -79,7 +80,7 @@ class BibleBook {
     BibleBook._('2 John'),
     BibleBook._('3 John'),
     BibleBook._('Jude'),
-    BibleBook._('Revelation')
+    BibleBook._('Revelation'),
   ];
 
   static const indonesianNames = <BibleBook>[
@@ -148,6 +149,6 @@ class BibleBook {
     BibleBook._('2 Yohanes'),
     BibleBook._('3 Yohanes'),
     BibleBook._('Yudas'),
-    BibleBook._('Wahyu')
+    BibleBook._('Wahyu'),
   ];
 }

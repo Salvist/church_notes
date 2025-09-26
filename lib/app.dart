@@ -8,6 +8,8 @@ import 'package:church_notes/presentation/splash/view/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class ChurchNotesApp extends StatelessWidget {
   final AppSettingsRepository appRepository;
@@ -40,15 +42,24 @@ class ChurchNotesApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<AppSettingsBloc>(create: (context) => AppSettingsBloc(appRepository)),
-          BlocProvider<NoteListCubit>(create: (context) => NoteListCubit(noteRepository)),
+          BlocProvider<AppSettingsBloc>(
+              create: (context) => AppSettingsBloc(appRepository)),
+          BlocProvider<NoteListCubit>(
+              create: (context) => NoteListCubit(noteRepository)),
         ],
-        child: BlocBuilder<AppSettingsBloc, AppSettings>(builder: (context, settings) {
+        child: BlocBuilder<AppSettingsBloc, AppSettings>(
+            builder: (context, settings) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Church Notes App',
             theme: _getTheme(brightness: settings.brightness),
             home: const SplashPage(),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              FlutterQuillLocalizations.delegate,
+            ],
           );
         }),
       ),
