@@ -8,21 +8,33 @@ import 'package:flutter_quill/flutter_quill.dart';
 
 class VerseLookupCubit extends Cubit<VerseLookupState> {
   final BibleRepository _bibleRepository;
-  VerseLookupCubit(this._bibleRepository, this.bibleVersion) : super(const VerseLookupSuccess());
+  VerseLookupCubit(this._bibleRepository, this.bibleVersion)
+    : super(const VerseLookupSuccess());
 
   BibleVersion bibleVersion;
   final referencesInNote = <BibleReference, int>{};
 
-  Future<List<BibleReference>> getBibleReferences(String text, {BibleVersion? version}) async {
-    final bookNames = await _bibleRepository.getBookNames(version ?? bibleVersion);
+  Future<List<BibleReference>> getBibleReferences(
+    String text, {
+    BibleVersion? version,
+  }) async {
+    final bookNames = await _bibleRepository.getBookNames(
+      version ?? bibleVersion,
+    );
 
-    final regex = RegExp(r'(\d?(?:\d\s)?[A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?');
-    final matches = regex.allMatches(text).where((element) => bookNames.contains(element.group(1)));
+    final regex = RegExp(
+      r'(\d?(?:\d\s)?[A-Za-z]+(?:\s[A-Za-z]+)*)\s(\d{1,3}):(\d{1,3})(?:-(\d{1,3}))?(?:\s*\(([A-Z]+)\))?',
+    );
+    final matches = regex.allMatches(text).where((element) {
+      return bookNames.contains(element.group(1));
+    });
+
     final references = matches.map((match) {
       final bookName = match.group(1)!;
       final chapter = int.parse(match.group(2)!);
       final verseStart = int.parse(match.group(3)!);
       final verseEnd = int.tryParse(match.group(4) ?? '');
+
       return BibleReference(
         bookName: bookName,
         chapter: chapter,

@@ -23,7 +23,7 @@ void main() async {
   final appRepository = AppSettingsRepositoryImpl(prefs);
 
   // To view onboarding
-  await prefs.setBool('isOnboardingCompleted', false);
+  // await prefs.setBool('isOnboardingCompleted', false);
 
   runApp(
     ChurchNotesApp(

@@ -23,7 +23,6 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
     final defaultBible = await getDefaultBible();
     final onboardingCompleted = await isOnboardingCompleted();
 
-
     return AppSettings(
       status: AppSettingsStatus.loaded,
       brightness: brightness,
@@ -77,7 +76,7 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
   Future<BibleVersion> getDefaultBible() async {
     final bibleString = await _prefs.getString(_defaultBible);
     if (bibleString == null) await _prefs.setString(_defaultBible, 'asv');
-    return BibleVersion.values.byName(bibleString ?? 'asv');
+    return BibleVersion.byName(bibleString ?? 'asv');
   }
 
   @override
